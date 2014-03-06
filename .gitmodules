@@ -1,3 +1,3 @@
 [submodule "SelectionReporter"]
-	path = SelectionReporter
-	url = /home/hrle/Projects/Git/fusion-widgets/SelectionReporter
+    path = SelectionReporter
+    url = https://www.opensource-osijek.org/gerrit/fusion-widgets/SelectionReporter
