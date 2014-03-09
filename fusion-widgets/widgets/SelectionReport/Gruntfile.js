@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: ['docs', 'build', 'dist', '<%= pkg.name %>.zip'],
+        clean: ['docs', 'build', 'dist', '<%= pkg.name %>-<%= pkg.version %>.zip'],
         jshint: {
             all: ['Gruntfile.js', 'src/js/*.js', 'test/js/*.js']
         },
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: '<%= pkg.name %>.zip'
+                    archive: '<%= pkg.name %>-<%= pkg.version %>.zip'
                 },
                 files: [{
                     expand: true,
