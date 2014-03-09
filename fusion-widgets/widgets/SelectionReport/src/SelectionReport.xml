@@ -1,0 +1,13 @@
+<WidgetInfo>
+    <Type>SelectionReport</Type>
+    <LocalizedType>SelectionReport</LocalizedType>
+    <Description>This is a widget which can generate a report based on map selection</Description>
+    <Location></Location>
+    <Label>SelectionReport</Label>
+    <Tooltip>Click to generate a selection report</Tooltip>
+    <StatusText></StatusText>
+    <ImageUrl>images/icons/edit-xml.png</ImageUrl>
+    <ImageClass>selectionreport</ImageClass>
+    <StandardUi>true</StandardUi>
+    <ContainableBy>Any</ContainableBy>
+</WidgetInfo>
