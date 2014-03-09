@@ -2,17 +2,9 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: ['docs', 'build', 'dist', '<%= pkg.name %>-<%= pkg.version %>.zip'],
+        clean: ['docs', 'build', 'dist', 'report', '<%= pkg.name %>-<%= pkg.version %>.zip', '.grunt'],
         jshint: {
             all: ['Gruntfile.js', 'src/js/*.js', 'test/js/*.js']
-        },
-        mkdir: {
-            all: {
-                options: {
-                    mode: 0700,
-                    create: ['docs']
-                },
-            },
         },
         yuidoc: {
             compile: {
@@ -23,6 +15,16 @@ module.exports = function(grunt) {
                 options: {
                     paths: 'src/js',
                     outdir: 'docs/'
+                }
+            }
+        },
+        jasmine: {
+            test: {
+                src: 'src/js/*.js',
+                options: {
+                    specs: 'test/js/*Spec.js',
+                    outfile: 'report/index.html',
+                    keepRunner: 'true'
                 }
             }
         },
@@ -58,6 +60,9 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "yuidoc" task.
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
+    // Load the plugin that provides the "jasmine" task.
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+
     // Load the plugin that provides the "copy" task.
     grunt.loadNpmTasks('grunt-contrib-copy');
 
@@ -65,5 +70,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-compress');
 
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'jshint', 'yuidoc', 'copy', 'compress']);
+    grunt.registerTask('default', ['clean', 'jshint', 'yuidoc', 'jasmine', 'copy', 'compress']);
 };
