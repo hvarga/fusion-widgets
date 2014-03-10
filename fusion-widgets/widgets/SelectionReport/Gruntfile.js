@@ -24,7 +24,8 @@ module.exports = function(grunt) {
                 options: {
                     specs: 'test/js/*Spec.js',
                     outfile: 'report/index.html',
-                    keepRunner: 'true'
+                    keepRunner: 'true',
+                    vendor: ['test/lib/fusion.js', 'test/lib/OpenLayers.js']
                 }
             }
         },
