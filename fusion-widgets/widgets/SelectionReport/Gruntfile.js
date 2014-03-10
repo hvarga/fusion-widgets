@@ -1,10 +1,21 @@
 module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
+        // Directory definitions.
+        srcDir: "src",
+        docsDir: "docs",
+        buildDir: "build",
+        distDir: "dist",
+        reportDir: "report",
+        testDir: "test",
+
+        // Parse the package.json.
         pkg: grunt.file.readJSON('package.json'),
-        clean: ['docs', 'build', 'dist', 'report', '<%= pkg.name %>-<%= pkg.version %>.zip', '.grunt'],
+
+        // Define and configure tasks.
+        clean: ['<%= docsDir %>', '<%= buildDir %>', '<%= distDir %>', '<%= reportDir %>', '<%= pkg.name %>-<%= pkg.version %>.zip', '.grunt'],
         jshint: {
-            all: ['Gruntfile.js', 'src/js/*.js', 'test/js/*.js']
+            all: ['Gruntfile.js', '<%= srcDir %>/js/*.js', '<%= testDir %>/js/*.js']
         },
         yuidoc: {
             compile: {
@@ -13,40 +24,40 @@ module.exports = function(grunt) {
                 version: '<%= pkg.version %>',
                 url: '<%= pkg.homepage %>',
                 options: {
-                    paths: 'src/js',
-                    outdir: 'docs/'
+                    paths: '<%= srcDir %>/js',
+                    outdir: '<%= docsDir %>/'
                 }
             }
         },
         jasmine: {
             test: {
-                src: 'src/js/*.js',
+                src: '<%= srcDir %>/js/*.js',
                 options: {
-                    specs: 'test/js/*Spec.js',
-                    outfile: 'report/index.html',
+                    specs: '<%= testDir %>/js/*Spec.js',
+                    outfile: '<%= reportDir %>/index.html',
                     keepRunner: 'true',
-                    vendor: ['test/lib/fusion.js', 'test/lib/OpenLayers.js']
+                    vendor: ['<%= testDir %>/lib/fusion.js', '<%= testDir %>/lib/OpenLayers.js']
                 }
             }
         },
         copy: {
             main: {
                 files: [{
-                    expand: true, flatten: true, src: ['src/js/<%= pkg.name %>.js'], dest: 'dist/', filter: 'isFile'
+                    expand: true, flatten: true, src: ['<%= srcDir %>/js/<%= pkg.name %>.js'], dest: '<%= buildDir %>/', filter: 'isFile'
                 }, {
-                    expand: true, flatten: true, src: ['src/<%= pkg.name %>.xml'], dest: 'dist/widgetinfo', filter: 'isFile'
+                    expand: true, flatten: true, src: ['<%= srcDir %>/<%= pkg.name %>.xml'], dest: '<%= buildDir %>/widgetinfo', filter: 'isFile'
                 }]
             }
         },
         compress: {
             main: {
                 options: {
-                    archive: '<%= pkg.name %>-<%= pkg.version %>.zip'
+                    archive: '<%= distDir %>/<%= pkg.name %>-<%= pkg.version %>.zip'
                 },
                 files: [{
                     expand: true,
                     src: "**/*",
-                    cwd: "dist/"
+                    cwd: "<%= buildDir %>/"
                 }]
             }
         }
