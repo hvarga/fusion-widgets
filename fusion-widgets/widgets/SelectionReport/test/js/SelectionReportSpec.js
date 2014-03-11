@@ -6,4 +6,8 @@ describe("SelectionReport", function() {
     it("must have a initializeWidget() method defined", function() {
         expect(Fusion.Widget.SelectionReport.prototype.initializeWidget).toBeDefined();
     });
+
+    it("must have a activate() method defined", function() {
+        expect(Fusion.Widget.SelectionReport.prototype.activate).toBeDefined();
+    });
 });
