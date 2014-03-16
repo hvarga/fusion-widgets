@@ -1,6 +1,5 @@
 <?php
 
-//echo "Hello from PHP.";
 function getRequestParameters() {
     global $params;
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -67,15 +66,6 @@ function propertyValueFromFeatureReader($featureReader, $propertyType, $property
 function exportData($selection) {
     // Create new PHPExcel object
     $objPHPExcel = new PHPExcel();
-    // Set document properties
-    $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
-         ->setLastModifiedBy("Maarten Balliauw")
-         ->setTitle("Office 2007 XLSX Test Document")
-         ->setSubject("Office 2007 XLSX Test Document")
-         ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-         ->setKeywords("office 2007 openxml php")
-         ->setCategory("Test result file");
-
     $objPHPExcel->setActiveSheetIndex(0);
 
     $currentRow = 1;
@@ -83,7 +73,6 @@ function exportData($selection) {
     for ($i = 0; $i < $numberOfLayers; $i++) {
         $isPropertiesHeaderWritten = false;
         $layer = $selection->GetLayers()->GetItem($i);
-        //$layerName = $layer->GetName();
         $layerLegendLabel = $layer->GetLegendLabel();
 
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $currentRow, $layerLegendLabel);
@@ -91,8 +80,6 @@ function exportData($selection) {
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow(0, $currentRow)->getFill()->getStartColor()->setARGB('FFC0C0C0');
 
         $layerClassName = $layer->GetFeatureClassName();
-        //echo $layerSelectedFeaturesCount;
-        //$layerSelectedFeatures = $selection->GetSelectedFeatures($layer, $layerClassName, new MgStringCollection());
         $layerSelectedFeatures = $selection->GetSelectedFeatures($layer, $layerClassName, true);
 
         $currentRow++;
@@ -109,8 +96,6 @@ function exportData($selection) {
                 $currentRow++;
             }
 
-
-            //echo $layerSelectedFeatures->GetString("Naziv_KO");
             for ($j = 0; $j < $propertyCount; $j++) {
                 $propertyName = $layerSelectedFeatures->GetPropertyName($j);
                 $propertyType = $layerSelectedFeatures->GetPropertyType($propertyName);
@@ -124,7 +109,7 @@ function exportData($selection) {
         }
     }
 
-    // Redirect output to a client�s web browser (Excel2007)
+    // Redirect output to a client's web browser (Excel2007)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="report.xlsx"');
 
@@ -161,20 +146,5 @@ $selection = new MgSelection($map);
 $selection->Open($resourceService, $mapName);
 
 exportData($selection);
-
-echo "Done, done.";
-
-    /*
-try {
-    $map = new MgMap();
-    $resourceSrvc = $siteConnection->CreateService(MgServiceType::ResourceService);
-    $map->Open($resourceSrvc, $mapName);
-    echo "Done, done.";
-} catch(MgException $e) {
-    echo $e->getMessage();
-} catch(Exception $ne) {
-    echo $ne->getMessage();
-}
-*/
 
 ?>
