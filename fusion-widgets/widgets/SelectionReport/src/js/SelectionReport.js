@@ -13,6 +13,7 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
     uiClass: Jx.Button,
 
     map: null,
+    widgetLayer: null,
 
     /**
      * Method is called automatically when the widget needs to be initialized by the platform.
@@ -23,6 +24,8 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
      */
     initializeWidget: function(widgetTag) {
         // Enable the widget so that it can be used by the user.
+        //this.sBaseUrl = Fusion.getFusionURL() + 'widgets/SelectionReport/SelectionReport.php';
+        this.sBaseUrl = 'widgets/SelectionReport/SelectionReport.php';
         this.enable();
     },
 
@@ -33,8 +36,61 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
      * @method activate
      */
     activate: function() {
-        // TODO: Implement the generating of report.
+        widgetLayer = this.getMapLayer();
 
+        //var url = 'widgets/SelectionReport/SelectionReport.php';
+        var url = Fusion.getFusionURL() + 'widgets/SelectionReport/SelectionReport.php';
+        
+        
+        var sessionID = widgetLayer.getSessionID();
+        var mapName = widgetLayer.getMapName();
+        /*
+        var params = [];
+        params.push('locale=' + Fusion.locale);
+        params.push('sessionId=' + widgetLayer.getSessionID());
+        params.push('mapName=' + widgetLayer.getMapName());
+        
+        url += params.join('&');
+        
+        window.open(url);
+        */
+        
+        /*
+        var opts = {
+              parameters: {
+                  locale: Fusion.locale,
+                  sessionId: widgetLayer.getSessionID(),
+                  mapName: widgetLayer.getMapName()
+              },
+              
+              onComplete: OpenLayers.Function.bind(this.downloadReady, this)
+          };
+          Fusion.ajaxRequest(url, opts);
+          */
+          
+          /*
+          var request = OpenLayers.Request.GET({
+                url: Fusion.getFusionURL() + 'widgets/SelectionReport/SelectionReport.php',
+                params: {
+                  locale: Fusion.locale,
+                  sessionId: widgetLayer.getSessionID(),
+                  mapName: widgetLayer.getMapName()
+              },
+                async: false
+            });
+            // do something with the response
+            alert('ok');
+            */
+            var params = [];
+            params.push('locale=' + Fusion.locale);
+            params.push('sessionId=' + widgetLayer.getSessionID());
+            params.push('mapName=' + widgetLayer.getMapName());
+            
+            url += '?' + params.join('&');
+            window.location.href = url;
+          
+          
+        /*
         // Get the reference to the widget responsible for rendering of the map.
         map = Fusion.getWidgetById("Map");
         // Now that we have a referece to the map widget, we need to get the selected parcels.
@@ -42,6 +98,26 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
         // The getSelection() method is an asynchronous call so we need to register a callback method.
         // The callback method will be called when getSelection() finishes its processing.
         map.getSelection(this.displaySelection);
+       */
+        
+    },
+    
+    downloadReady: function(data) {
+        //alert("Call to PHP script complete.");
+        // Download the CSV file.
+        /*
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(new Blob([data], {type: 'application/vnd.ms-excel'}));
+        a.download = 'report.xls';
+
+        // Append anchor to body.
+        document.body.appendChild(a);
+        a.click();
+
+        // Remove anchor from body
+        document.body.removeChild(a);
+        */
+        //window.location = Fusion.getFusionURL() + 'widgets/SelectionReport/SelectionReport.php';
     },
 
     /**
@@ -52,6 +128,10 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
      * @param selection Object which will contain all the selected parcels from the map widget.
      */
     displaySelection: function(selection) {
+    
+        
+          
+        /*  
         // We need to read the map name from the selection object.
         // There can be actually multiple maps in one selection object. Which is kind of weird, since the map
         // widget itself can only render one map at a time. So, I will only take the first map.
@@ -126,5 +206,6 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
 
         // Remove anchor from body
         document.body.removeChild(a);
+        */
     }
 });
