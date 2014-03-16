@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                 }, {
                     expand: true, flatten: true, src: ['<%= srcDir %>/php/<%= pkg.name %>.php'], dest: '<%= buildDir %>/<%= pkg.name %>', filter: 'isFile'
                 }, {
-                    expand: true, cwd: '<%= libDir %>/', src: ['**'], dest: '<%= buildDir %>/<%= pkg.name %>/'
+                    expand: true, cwd: '<%= libDir %>/', src: ['**'], dest: '<%= buildDir %>/<%= pkg.name %>/lib'
                 }]
             }
         },
