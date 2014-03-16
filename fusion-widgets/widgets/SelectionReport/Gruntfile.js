@@ -3,6 +3,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         // Directory definitions.
         srcDir: "src",
+        libDir: "lib",
         docsDir: "docs",
         buildDir: "build",
         distDir: "dist",
@@ -46,6 +47,10 @@ module.exports = function(grunt) {
                     expand: true, flatten: true, src: ['<%= srcDir %>/js/<%= pkg.name %>.js'], dest: '<%= buildDir %>/', filter: 'isFile'
                 }, {
                     expand: true, flatten: true, src: ['<%= srcDir %>/<%= pkg.name %>.xml'], dest: '<%= buildDir %>/widgetinfo', filter: 'isFile'
+                }, {
+                    expand: true, flatten: true, src: ['<%= srcDir %>/php/<%= pkg.name %>.php'], dest: '<%= buildDir %>/<%= pkg.name %>', filter: 'isFile'
+                }, {
+                    expand: true, cwd: '<%= libDir %>/', src: ['**'], dest: '<%= buildDir %>/<%= pkg.name %>/'
                 }]
             }
         },
