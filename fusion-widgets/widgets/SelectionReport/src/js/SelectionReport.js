@@ -62,15 +62,33 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
             break;
         }
 
+        // Define a variable which will hold the collected data that user needs to download.
+        var collectedData = "";
         // Since map can contain selections from the multiple layers, we need to iterate over each layer.
         var numberOfLayers = mapSelection.getNumLayers();
         for (var layerNum = 0; layerNum < numberOfLayers; layerNum++) {
             var layer = mapSelection.getLayer(layerNum);
+            var layerName = layer.getName();
+
+            collectedData = collectedData.concat(layerName, '\n');
 
             // Layer can also have multiple features and we need to iterate over each one.
             var numberOfSelectedElements = layer.getNumElements();
             var layerPropertyNames = layer.getPropertyNames();
             var numberOfLayerProperties = layer.getNumProperties();
+
+            // Add the layer property names as a columns in collectedData.
+            for (propertyNum = 0; propertyNum < numberOfLayerProperties; propertyNum++) {
+                var layerPropertyName = layerPropertyNames[propertyNum];
+                collectedData = collectedData.concat(layerPropertyName);
+
+                if (propertyNum != numberOfLayerProperties - 1) {
+                    collectedData = collectedData.concat(",");
+                }
+            }
+
+            collectedData = collectedData.concat("\n");
+
             if (numberOfSelectedElements > 0) {
                 // Get each selected element.
                 for (var elementNumber = 0; elementNumber < numberOfSelectedElements; elementNumber++) {
@@ -80,10 +98,33 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
                         var propertyName = layerPropertyNames[propertyNum];
                         var propertyValue = layer.getElementValue(elementNumber, propertyNum);
 
-                        console.log("propertyName: " + propertyName + "; propertyValue: " + propertyValue);
+                        // Decode HTML entity.
+                        var t = window.document.createElement('textarea');
+                        t.innerHTML = propertyValue;
+                        var v = t.value;
+
+                        collectedData = collectedData.concat(v);
+
+                        if (propertyNum != numberOfLayerProperties - 1) {
+                            collectedData = collectedData.concat(",");
+                        }
                     }
+
+                    collectedData = collectedData.concat("\n");
                 }
             }
         }
+
+        // Download the CSV file.
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(new Blob([collectedData], {type: 'text/csv'}));
+        a.download = 'report.csv';
+
+        // Append anchor to body.
+        document.body.appendChild(a);
+        a.click();
+
+        // Remove anchor from body
+        document.body.removeChild(a);
     }
 });
