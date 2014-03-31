@@ -65,8 +65,9 @@ function propertyValueFromFeatureReader($featureReader, $propertyType, $property
     return $val;
 }
 
-function exportData($selection) {
+function exportData($selection, $fileName) {
     $report = new ExcelReporter();
+    $report->setReportFileName($fileName);
 
     $numberOfLayers = $selection->GetLayers()->GetCount();
     $report->setNumberOfLayers($numberOfLayers);
@@ -139,4 +140,4 @@ $map->Open($resourceService, $mapName);
 $selection = new MgSelection($map);
 $selection->Open($resourceService, $mapName);
 
-exportData($selection);
+exportData($selection, $fileName);

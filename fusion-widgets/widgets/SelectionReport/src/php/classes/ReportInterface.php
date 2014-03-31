@@ -6,6 +6,12 @@
  * Note that some methods will be called more than once. Specifically, each layer will trigger calling of reportLayerName(), reportHeaderForLayer() and reportRecordForLayer().
  */
 interface ReportInterface {
+    /**
+     * Set the name of the report file.
+     *
+     * @param unknown $reportFileName The name of the report file.
+     */
+    public function setReportFileName($reportFileName);
 
     /**
      * The number of layers which have selections.

@@ -13,6 +13,14 @@ class ExcelReporter implements ReportInterface {
      * @var PHPExcel
      */
     private $phpExcel;
+
+    /**
+     * Name of the report file.
+     *
+     * @var string
+     */
+    private $reportFileName;
+
     /**
      * Holds the number of layers.
      *
@@ -30,6 +38,10 @@ class ExcelReporter implements ReportInterface {
         // Create new PHPExcel object
         $this->phpExcel = new PHPExcel();
         $this->phpExcel->setActiveSheetIndex(0);
+    }
+
+    public function setReportFileName($reportFileName) {
+        $this->reportFileName = $reportFileName;
     }
 
     public function setNumberOfLayers($numberOfLayers) {
@@ -68,7 +80,7 @@ class ExcelReporter implements ReportInterface {
     public function generateReport() {
         // Redirect output to a client's web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="report.xlsx"');
+        header('Content-Disposition: attachment;filename="' . $this->reportFileName .'.xlsx"');
 
         $objWriter = PHPExcel_IOFactory::createWriter($this->phpExcel, 'Excel2007');
         $objWriter->save('php://output');
