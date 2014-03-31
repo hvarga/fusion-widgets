@@ -48,7 +48,8 @@ module.exports = function(grunt) {
                 }, {
                     expand: true, flatten: true, src: ['<%= srcDir %>/<%= pkg.name %>.xml'], dest: '<%= buildDir %>/widgetinfo', filter: 'isFile'
                 }, {
-                    expand: true, flatten: true, src: ['<%= srcDir %>/php/<%= pkg.name %>.php'], dest: '<%= buildDir %>/<%= pkg.name %>', filter: 'isFile'
+                    //expand: true, flatten: true, src: ['<%= srcDir %>/php/**'], dest: '<%= buildDir %>/<%= pkg.name %>'
+                    expand: true, cwd: '<%= srcDir %>/php/', src: ['**'], dest: '<%= buildDir %>/<%= pkg.name %>'
                 }, {
                     expand: true, cwd: '<%= libDir %>/', src: ['**'], dest: '<%= buildDir %>/<%= pkg.name %>/lib'
                 }]
