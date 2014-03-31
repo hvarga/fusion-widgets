@@ -11,6 +11,8 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
      * @type {Jx.Button}
      */
     uiClass: Jx.Button,
+    reportFormat: null,
+    fileName: null,
     scriptUrl: null,
 
     /**
@@ -23,6 +25,10 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
      *            JSON object.
      */
     initializeWidget: function(widgetTag) {
+        var json = widgetTag.extension;
+
+        this.reportFormat = json.ReportFormat ? json.ReportFormat[0] : null;
+        this.fileName = json.FileName ? json.FileName[0] : null;
         // Set up the base URL which points to the script located on the server side.
         // This script contains the buisiness logic for genereting a selection report.
         this.scriptUrl = Fusion.getFusionURL() + 'widgets/SelectionReport/SelectionReport.php';
@@ -47,6 +53,8 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
         var params = [];
         params.push('sessionId=' + sessionId);
         params.push('mapName=' + mapName);
+        params.push('reportFormat=' + this.reportFormat);
+        params.push('fileName=' + this.fileName);
 
         url += '?' + params.join('&');
         window.location.href = url;

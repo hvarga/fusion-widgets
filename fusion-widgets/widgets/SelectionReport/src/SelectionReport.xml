@@ -10,4 +10,20 @@
     <ImageClass>selectionreport</ImageClass>
     <StandardUi>true</StandardUi>
     <ContainableBy>Any</ContainableBy>
+    <Parameter>
+        <Name>ReportFormat</Name>
+        <Description>The format of the report file.</Description>
+        <Type>String</Type>
+        <Label>Report Format</Label>
+        <DefaultValue>Excel2007</DefaultValue>
+        <IsMandatory>false</IsMandatory>
+    </Parameter>
+    <Parameter>
+        <Name>FileName</Name>
+        <Description>The name of the report file.</Description>
+        <Type>String</Type>
+        <Label>File Name</Label>
+        <DefaultValue>report</DefaultValue>
+        <IsMandatory>false</IsMandatory>
+    </Parameter>
 </WidgetInfo>

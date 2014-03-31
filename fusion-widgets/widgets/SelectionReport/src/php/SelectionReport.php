@@ -8,12 +8,12 @@ function getRequestParameters() {
         $params = $_GET;
     }
 
-    //global $mapName, $sessionId, $reportFormat;
-    global $mapName, $sessionId;
+    global $mapName, $sessionId, $reportFormat, $fileName;
 
     $mapName = $params['mapName'];
     $sessionId = $params['sessionId'];
-    //$reportFormat = $params['reportFormat'];
+    $reportFormat = $params['reportFormat'];
+    $fileName = $params['fileName'];
 }
 
 function propertyValueFromFeatureReader($featureReader, $propertyType, $propertyName) {
@@ -122,7 +122,8 @@ if (InitializationErrorOccurred()) {
 
 $mapName = "";
 $sessionId = "";
-//$reportFormat = "";
+$reportFormat = "";
+$fileName = "";
 
 getRequestParameters();
 
