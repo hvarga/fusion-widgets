@@ -74,14 +74,19 @@ function exportData($selection, $fileName) {
     for ($i = 0; $i < $numberOfLayers; $i ++) {
         $layer = $selection->GetLayers()->GetItem($i);
         $layerLegendLabel = $layer->GetLegendLabel();
-        $report->reportLayerName($layerLegendLabel);
 
         $layerClassName = $layer->GetFeatureClassName();
         $layerSelectedFeatures = $selection->GetSelectedFeatures($layer, $layerClassName, true);
 
+        $isLayerWritten = false;
         $isHeaderWritten = false;
         while ($layerSelectedFeatures->ReadNext()) {
             $propertyCount = $layerSelectedFeatures->GetPropertyCount();
+
+            if ($isLayerWritten == false) {
+                $report->reportLayerName($layerLegendLabel, $propertyCount);
+                $isLayerWritten = true;
+            }
 
             if ($isHeaderWritten == false) {
                 $layerHeader = array();
