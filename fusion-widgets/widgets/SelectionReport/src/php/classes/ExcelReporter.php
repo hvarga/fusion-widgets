@@ -34,6 +34,9 @@ class ExcelReporter implements ReportInterface {
      */
     private $currentRow = 1;
 
+    public static $COLOR_DARK_GREY = '919191';
+    public static $COLOR_LIGHT_GREY = 'D6D6D6';
+
     function __construct() {
         // Create new PHPExcel object
         $this->phpExcel = new PHPExcel();
@@ -55,7 +58,7 @@ class ExcelReporter implements ReportInterface {
 
         $this->phpExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $this->currentRow, $layerName);
         $this->phpExcel->getActiveSheet()->getStyleByColumnAndRow(0, $this->currentRow)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-        $this->phpExcel->getActiveSheet()->getStyleByColumnAndRow(0, $this->currentRow)->getFill()->getStartColor()->setRGB('919191');
+        $this->phpExcel->getActiveSheet()->getStyleByColumnAndRow(0, $this->currentRow)->getFill()->getStartColor()->setRGB(self::$COLOR_DARK_GREY);
 
         $this->phpExcel->getActiveSheet()->mergeCellsByColumnAndRow(0, $this->currentRow, $propertyCount - 1, $this->currentRow);
 
@@ -67,7 +70,7 @@ class ExcelReporter implements ReportInterface {
             $columnName = $header[$i];
             $this->phpExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $this->currentRow, $columnName);
             $this->phpExcel->getActiveSheet()->getStyleByColumnAndRow($i, $this->currentRow)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-            $this->phpExcel->getActiveSheet()->getStyleByColumnAndRow($i, $this->currentRow)->getFill()->getStartColor()->setRGB('D6D6D6');
+            $this->phpExcel->getActiveSheet()->getStyleByColumnAndRow($i, $this->currentRow)->getFill()->getStartColor()->setRGB(self::$COLOR_LIGHT_GREY);
         }
 
         $this->currentRow++;
