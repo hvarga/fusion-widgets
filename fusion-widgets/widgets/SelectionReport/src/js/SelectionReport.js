@@ -32,8 +32,12 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
         // Set up the base URL which points to the script located on the server side.
         // This script contains the buisiness logic for genereting a selection report.
         this.scriptUrl = Fusion.getFusionURL() + 'widgets/SelectionReport/SelectionReport.php';
-        // Enable the widget so that it can be used by the user.
-        this.enable();
+        // Initialy the widget must be disabled (there is no map selection).
+        this.enable = Fusion.Widget.SelectionReport.prototype.enable;
+        // Register for map selection events so that we can enable or disable the widget depending if user selected
+        // something or not.
+        this.getMap().registerForEvent(Fusion.Event.MAP_SELECTION_ON, OpenLayers.Function.bind(this.enable, this));
+        this.getMap().registerForEvent(Fusion.Event.MAP_SELECTION_OFF, OpenLayers.Function.bind(this.disable, this));
     },
 
     /**
@@ -58,5 +62,16 @@ Fusion.Widget.SelectionReport = OpenLayers.Class(Fusion.Widget, {
 
         url += '?' + params.join('&');
         window.location.href = url;
+    },
+
+    /**
+     * This method is responisble for enabling or disabling the widget button.
+     */
+    enable: function() {
+        if (this.oMap && this.oMap.hasSelection()) {
+            Fusion.Widget.prototype.enable.apply(this, []);
+        } else {
+            this.disable();
+        }
     }
 });
