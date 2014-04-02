@@ -15,7 +15,15 @@
         <Description>The format of the report file.</Description>
         <Type>String</Type>
         <Label>Report Format</Label>
-        <DefaultValue>Excel2007</DefaultValue>
+        <AllowedValue>
+            <Name>pdf</Name>
+            <Label>PDF</Label>
+        </AllowedValue>
+        <AllowedValue>
+            <Name>excel_2007</Name>
+            <Label>Excel2007</Label>
+        </AllowedValue>
+        <DefaultValue>PDF</DefaultValue>
         <IsMandatory>false</IsMandatory>
     </Parameter>
     <Parameter>

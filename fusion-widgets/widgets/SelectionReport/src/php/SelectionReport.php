@@ -65,8 +65,16 @@ function propertyValueFromFeatureReader($featureReader, $propertyType, $property
     return $val;
 }
 
-function exportData($selection, $fileName) {
-    $report = new PDFReporter();
+function exportData($selection, $fileName, $reportFormat) {
+    $report = null;
+    if ($reportFormat == "Excel2007") {
+        $report = new Excel2007Reporter();
+    } else if ($reportFormat == "PDF") {
+        $report = new PDFReporter();
+    } else {
+        die('Report format is not specified or it is unsupported.');
+    }
+
     $report->setReportFileName($fileName);
 
     $numberOfLayers = $selection->GetLayers()->GetCount();
@@ -146,4 +154,4 @@ $map->Open($resourceService, $mapName);
 $selection = new MgSelection($map);
 $selection->Open($resourceService, $mapName);
 
-exportData($selection, $fileName);
+exportData($selection, $fileName, $reportFormat);
