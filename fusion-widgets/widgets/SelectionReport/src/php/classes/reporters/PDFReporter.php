@@ -9,7 +9,7 @@ class PDFReporter extends DefaultPHPExcelReporter {
     function __construct() {
         $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
         $rendererLibrary = 'mPDF';
-        $rendererLibraryPath = dirname(__FILE__) . '/../lib/' . $rendererLibrary;
+        $rendererLibraryPath = dirname(__FILE__) . '/../../lib/' . $rendererLibrary;
 
         if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
             die('Cannot set the PHPExcel PDF renderer.');

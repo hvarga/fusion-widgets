@@ -1,5 +1,5 @@
 <?php
-include 'DefaultPHPExcelReporter.php';
+include_once 'DefaultPHPExcelReporter.php';
 include_once 'lib/PHPExcel/PHPExcel.php';
 
 /**

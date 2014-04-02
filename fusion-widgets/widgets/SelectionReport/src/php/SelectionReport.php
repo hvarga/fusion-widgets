@@ -127,8 +127,9 @@ function exportData($selection, $fileName, $reportFormat) {
 $fusionMGpath = '../../layers/MapGuide/php/';
 
 include $fusionMGpath . 'Common.php';
-include 'classes/Excel2007Reporter.php';
-include 'classes/PDFReporter.php';
+foreach (glob("classes/reporters/*.php") as $filename) {
+    include_once $filename;
+}
 
 if (InitializationErrorOccurred()) {
     DisplayInitializationErrorHTML();
