@@ -66,14 +66,14 @@ function propertyValueFromFeatureReader($featureReader, $propertyType, $property
 }
 
 function exportData($selection, $fileName, $reportFormat) {
-    $report = null;
-    if ($reportFormat == "Excel2007") {
-        $report = new Excel2007Reporter();
-    } else if ($reportFormat == "PDF") {
-        $report = new PDFReporter();
-    } else {
-        die('Report format is not specified or it is unsupported.');
+    $reportClassName = $reportFormat . 'Reporter';
+    // Check that the reporter class exists before trying to use it.
+    if (class_exists($reportClassName) == false) {
+        die('Report format is unsupported. Please check the ReportFormat widget parameter for supported values.');
     }
+
+    // Initialize the reporter based on the report format.
+    $report = new $reportClassName;
 
     $report->setReportFileName($fileName);
 
