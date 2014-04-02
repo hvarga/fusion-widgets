@@ -1,38 +1,40 @@
 <?php
 include 'ReportInterface.php';
-include 'lib/PHPExcel/PHPExcel.php';
+include_once 'lib/PHPExcel/PHPExcel.php';
 
 /**
- * Class responsible for generating of Excell 2007 format report.
+ * Class which implements ReporterInterface using the PHPExcel library.
+ * It uses the data to populate the PHPExcel object, but it is left for the user to make
+ * a fine grained adaptation and to implement the generation of a report.
  */
-class ExcelReporter implements ReportInterface {
+abstract class DefaultPHPExcelReporter implements ReportInterface {
     /**
      * The PHPExcel itself.
      *
      * @link https://phpexcel.codeplex.com/
      * @var PHPExcel
      */
-    private $phpExcel;
+    protected $phpExcel;
 
     /**
      * Name of the report file.
      *
      * @var string
      */
-    private $reportFileName;
+    protected $reportFileName;
 
     /**
      * Holds the number of layers.
      *
      * @var integer
      */
-    private $numberOfLayers;
+    protected $numberOfLayers;
     /**
      * Represents current processing row.
      *
      * @var integer
      */
-    private $currentRow = 1;
+    protected $currentRow = 1;
 
     public static $COLOR_DARK_GREY = '919191';
     public static $COLOR_LIGHT_GREY = 'D6D6D6';
@@ -83,17 +85,5 @@ class ExcelReporter implements ReportInterface {
         }
 
         $this->currentRow++;
-    }
-
-    /**
-     * Generate a selection report using Excel 2007 format.
-     */
-    public function generateReport() {
-        // Redirect output to a client's web browser (Excel2007)
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $this->reportFileName .'.xlsx"');
-
-        $objWriter = PHPExcel_IOFactory::createWriter($this->phpExcel, 'Excel2007');
-        $objWriter->save('php://output');
     }
 }

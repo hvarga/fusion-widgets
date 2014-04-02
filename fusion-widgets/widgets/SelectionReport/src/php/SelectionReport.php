@@ -66,7 +66,7 @@ function propertyValueFromFeatureReader($featureReader, $propertyType, $property
 }
 
 function exportData($selection, $fileName) {
-    $report = new ExcelReporter();
+    $report = new PDFReporter();
     $report->setReportFileName($fileName);
 
     $numberOfLayers = $selection->GetLayers()->GetCount();
@@ -119,7 +119,8 @@ function exportData($selection, $fileName) {
 $fusionMGpath = '../../layers/MapGuide/php/';
 
 include $fusionMGpath . 'Common.php';
-include 'classes/ExcelReporter.php';
+include 'classes/Excel2007Reporter.php';
+include 'classes/PDFReporter.php';
 
 if (InitializationErrorOccurred()) {
     DisplayInitializationErrorHTML();
